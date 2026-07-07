@@ -1,0 +1,136 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model tutorProfile {
+  id      String    @id @default(ulid())
+  bio     String    @db.Text
+  courses Courses[]
+}
+
+model categories {
+  id     String    @id @default(ulid())
+  name   String    @db.VarChar(225)
+  course Courses[]
+}
+
+model Courses {
+  id          String       @id @default(ulid())
+  name        String       @db.VarChar(225)
+  description String       @db.Text
+  tags        String[]
+  tutorId     String
+  tutor       tutorProfile @relation(fields: [tutorId], references: [id])
+  categoryId  String
+  category    categories   @relation(fields: [categoryId], references: [id])
+  price       Int
+  dayOfWeek   String[]
+  startTime   Int
+  endTime     Int
+  startDate   DateTime
+  endDate     DateTime
+  booking     Bookings[]
+  review      Reviews[]
+}
+
+model Reviews {
+  id        String   @id @default(ulid())
+  content   String   @db.Text
+  userId    String
+  courseId  String
+  course    Courses  @relation(fields: [courseId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum bookingStatus {
+  CONFIRMED
+  UNCONFIRMED
+
+}
+
+model Bookings {
+  id        String        @id @default(ulid())
+  studentId String
+  courseId  String
+  course    Courses       @relation(fields: [courseId], references: [id])
+  price     Int
+  status    bookingStatus @default(UNCONFIRMED)
+
+  @@unique([studentId, courseId])
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+
+  role String? @default("USER")
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
