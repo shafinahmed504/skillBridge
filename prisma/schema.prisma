@@ -14,6 +14,9 @@ datasource db {
 
 model tutorProfile {
   id      String    @id @default(ulid())
+  userId String @unique
+  user User @relation(fields: [userId],references: [id])
+ 
   bio     String    @db.Text
   courses Courses[]
 }
@@ -62,11 +65,12 @@ enum bookingStatus {
 model Bookings {
   id        String        @id @default(ulid())
   studentId String
+  student User @relation(fields: [studentId],references: [id])
   courseId  String
   course    Courses       @relation(fields: [courseId], references: [id])
   price     Int
   status    bookingStatus @default(UNCONFIRMED)
-
+  createdAt DateTime @default(now())
   @@unique([studentId, courseId])
 }
 
@@ -76,6 +80,11 @@ model User {
   email         String
   emailVerified Boolean   @default(false)
   image         String?
+  address       String?
+  dateOfBirth   String?
+  tutor tutorProfile?
+  bookings Bookings[]
+
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   sessions      Session[]

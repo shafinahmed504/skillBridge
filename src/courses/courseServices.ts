@@ -5,7 +5,7 @@ type Course = {
   name: string;
   description: string;
   tags: string[];
-  tutorId: string;
+  tutorId?: string;
   categoryId: string;
   price: number;
   dayOfWeek: string[];
@@ -19,10 +19,24 @@ type Course = {
 
 
 
-const createCourse=async(courseDeails:Course)=>{
+const createCourse=async(courseDeails:Course,userId:string)=>{
+
+    const tutor=await prisma.tutorProfile.findUnique({
+        where:{
+             userId
+        }
+        
+    })
+
+    
 
     const result=await prisma.courses.create({
-        data:courseDeails
+        data:{
+            ...courseDeails,
+            tutorId:tutor?.id as string
+        }
+        
+        
     })
 
     return result
