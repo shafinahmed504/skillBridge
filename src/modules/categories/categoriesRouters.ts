@@ -1,6 +1,6 @@
 import express from "express"
 import { categoriesControllers } from "./categoriesControllers"
-import middlewareAuth from "../middleware/middlewareAuth"
+import middlewareAuth from "../../middleware/middlewareAuth"
 
 const router=express.Router()
 

@@ -1,5 +1,5 @@
 import express from "express"
-import middlewareAuth from "../middleware/middlewareAuth"
+import middlewareAuth from "../../middleware/middlewareAuth"
 import { adminControllers } from "./adminControllers"
 
 
