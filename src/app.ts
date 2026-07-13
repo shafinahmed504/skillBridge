@@ -3,11 +3,11 @@ import { courseRouters } from "./modules/courses/courseRouters"
 import { toNodeHandler } from "better-auth/node";
 import { auth } from "./lib/auth";
 import cors from "cors"
-import { categoriesRouters } from "./modules/categories/categoriesRouters";
-import { tutorManagementRouter } from "./tutorManagementRouter/tutorManagementRouters";
 import { publicTutorRoutes } from "./modules/PublictutorProfile/tutorProfileRoutes";
+import { tutorManagementRouter } from "./modules/tutorManagement/tutorManagementRouters";
+import { categoriesRouters } from "./modules/categories/categoriesRouters";
 import { bookingRoutes } from "./modules/bookingManagement/bookingRoutes";
-import { studentDashboardRoutes } from "./studentDashboard/studentDashboardRoutes";
+import { studentDashboardRoutes } from "./modules/studentDashboard/studentDashboardRoutes";
 import { adminRoutes } from "./modules/adminManagement/adminRoutes";
 
 

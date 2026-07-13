@@ -15,9 +15,31 @@ const createCourse=async(req:Request,res:Response)=>{
 }
 
 
+const getCourses=async(req:Request,res:Response)=>{
+    const {search}=req.query
+
+
+    const searchString=typeof search ==='string'?search : undefined
+        if(!searchString){
+        return 
+    }
+
+    const tags=req.query.tags ? (req.query.tags as string).split(","):[]
+
+    
+        try{   
+        const result=await courseServices.getCourses({search:searchString,tags})
+        res.status(200).json(result)
+    }catch(error:any){
+        res.status(500).json(error.message)
+    }
+
+}
+
+
 
 
 
 export const courseControllers={
-    createCourse
+    createCourse,getCourses
 }

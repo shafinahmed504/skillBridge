@@ -1,7 +1,7 @@
 import express from "express"
 
 import { tutorManagementControllers } from "./tutorManagementControllers"
-import middlewareAuth from "../middleware/middlewareAuth"
+import middlewareAuth from "../../middleware/middlewareAuth"
 
 
 

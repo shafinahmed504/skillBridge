@@ -1,6 +1,6 @@
+import { Prisma } from "../../../generated/prisma/client";
+import { prisma } from "../../lib/prisma";
 
-import { Prisma } from "../../generated/prisma/client";
-import { prisma } from "../lib/prisma"
 
 const getOverview = async (studentId: string) => {
   const totalBookings = await prisma.bookings.count({

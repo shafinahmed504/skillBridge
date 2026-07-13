@@ -22,17 +22,11 @@ router.delete("/courses/:id",middlewareAuth("ADMIN"),adminControllers.deleteCour
 
 
 router.get("/bookings",middlewareAuth("ADMIN"),adminControllers.getBookings)
-router.get(
-  "/bookings/:id",middlewareAuth("ADMIN"),adminControllers.getBookingById
-);
+router.get("/bookings/:id",middlewareAuth("ADMIN"),adminControllers.getBookingById);
 
-router.patch(
-  "/bookings/:id/status",middlewareAuth("ADMIN"),adminControllers.updateBookingStatus
-);
+router.patch("/bookings/:id/status",middlewareAuth("ADMIN"),adminControllers.updateBookingStatus);
 
-router.delete(
-  "/bookings/:id",middlewareAuth("ADMIN"),adminControllers.deleteBooking
-);
+router.delete("/bookings/:id",middlewareAuth("ADMIN"),adminControllers.deleteBooking);
 
 
 

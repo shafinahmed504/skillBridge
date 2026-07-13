@@ -7,6 +7,7 @@ const router=express.Router()
 
 
 router.post("/",middlewareAuth("TUTOR"),courseControllers.createCourse)
+router.get("/",courseControllers.getCourses)
 
 
 
