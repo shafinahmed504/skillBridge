@@ -1,16 +1,26 @@
 
+
 import { prisma } from "../../lib/prisma"
 
 
 
 
 
-const getTutors=async()=>{
+const getTutors=async({name}:{name:string})=>{
+
     const result=await prisma.user.findMany(
         {
             where:{
-                role:"TUTOR"
+                role:"TUTOR",
+                AND:[
+                    {
+                        name:{
+                            contains:name
+                        }
+                    }
+                ]
             },
+            
             select:{
                 name:true,
                 email:true,

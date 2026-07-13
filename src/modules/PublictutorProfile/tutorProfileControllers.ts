@@ -4,9 +4,15 @@ import { tutorServices } from "./tutorServices"
 
 
 
+
 const getTutors=async(req:Request,res:Response)=>{
+    const {name}=req.query
+    const nameString= typeof name ==='string' ? name: undefined
+    if(nameString==undefined){
+        return
+    }
     try{
-        const result=await tutorServices.getTutors()
+        const result=await tutorServices.getTutors({name:nameString})
         console.log(result)
         res.status(200).json({
             success:true,
